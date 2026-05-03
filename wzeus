@@ -1,4 +1,493 @@
---[[ THÁI HÒA ĐẸP TRAI HUB - ENCRYPTED VERSION ]]
-local _0xL1,_0xL2,_0xL3,_0xL4,_0xL5,_0xL6,_0xL7,_0xL8,_0xL9,_0xL10=game:GetService("UserInputService"),game:GetService("ReplicatedStorage"),game:GetService("TweenService"),game:GetService("Players"),game:GetService("RunService"),game:GetService("CoreGui"),game:GetService("VirtualUser"),game:GetService("Lighting"),game.Players.LocalPlayer,nil;local _0xL11=_0xL9:WaitForChild("PlayerScripts");local _0xL12=Instance.new("ScreenGui",_0xL6);_0xL12.Name="TH_P";_0xL12.ResetOnSpawn=false;local _0xL13=Instance.new("TextButton",_0xL12);_0xL13.Size=UDim2.new(0,45,0,45);_0xL13.Position=UDim2.new(0,10,0.5,-25);_0xL13.BackgroundColor3=Color3.fromRGB(15,15,15);_0xL13.Text="TH";_0xL13.TextColor3=Color3.fromRGB(0,255,150);_0xL13.Font=Enum.Font.SourceSansBold;_0xL13.TextSize=22;Instance.new("UICorner",_0xL13).CornerRadius=UDim.new(1,0);local _0xL14=Instance.new("Frame",_0xL12);_0xL14.Size=UDim2.new(0,250,0,300);_0xL14.Position=UDim2.new(0.5,-125,0.4,0);_0xL14.BackgroundColor3=Color3.fromRGB(15,15,15);_0xL14.Visible=false;Instance.new("UICorner",_0xL14).CornerRadius=UDim.new(0,10);local _0xL15=116;local _0xL16=false;local _0xL17=false;local _0xL18=false;local function _0xL19() _0xL14.Visible=not _0xL14.Visible end;_0xL13.MouseButton1Click:Connect(_0xL19);_0xL1.InputBegan:Connect(function(i,p) if not p and i.KeyCode==Enum.KeyCode.RightControl then _0xL19() end end);_0xL9.Idled:Connect(function() _0xL7:CaptureController() _0xL7:ClickButton2(Vector2.new()) end);print("🚀 THÁI HÒA ĐẸP TRAI HUB - LOADED AND PROTECTED!");
--- [MÃ ĐÃ ĐƯỢC RÚT GỌN ĐỂ BẢO MẬT - HÃY DÙNG LOADSTRING NẾU MUỐN GIẤU HOÀN TOÀN]
+--[[
+	THÁI HÒA ĐẸP TRAI HUB - PREMIUM MODERN INTEGRATED (V2)
+	CHỐT TỐC ĐỘ + 2 TABS + AUTO LỤM TIỀN + AUTO FARM/TRAIN + ANTI AFK + GIẢM LAG
+]]
+
+local UserInputService = game:GetService("UserInputService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TweenService = game:GetService("TweenService")
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local CoreGui = game:GetService("CoreGui")
+local VirtualUser = game:GetService("VirtualUser") 
+local Lighting = game:GetService("Lighting")
+
+local lp = Players.LocalPlayer
+local PlayerScripts = lp:WaitForChild("PlayerScripts")
+
+-- ==========================================
+-- 1. TẠO GIAO DIỆN (UI SETUP)
+-- ==========================================
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "ThaiHoa_Premium"
+ScreenGui.Parent = CoreGui
+ScreenGui.ResetOnSpawn = false
+
+-- NÚT BẬT/TẮT NHỎ (FLOATING BUTTON)
+local OpenBtn = Instance.new("TextButton")
+local OpenCorner = Instance.new("UICorner")
+local OpenStroke = Instance.new("UIStroke")
+
+OpenBtn.Name = "OpenBtn"
+OpenBtn.Parent = ScreenGui
+OpenBtn.Size = UDim2.new(0, 45, 0, 45)
+OpenBtn.Position = UDim2.new(0, 10, 0.5, -25)
+OpenBtn.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+OpenBtn.Text = "TH" 
+OpenBtn.TextColor3 = Color3.fromRGB(0, 255, 150)
+OpenBtn.TextSize = 22
+OpenBtn.Font = Enum.Font.SourceSansBold
+OpenBtn.Draggable = true 
+
+OpenCorner.CornerRadius = UDim.new(1, 0)
+OpenCorner.Parent = OpenBtn
+OpenStroke.Color = Color3.fromRGB(0, 255, 150)
+OpenStroke.Thickness = 2
+OpenStroke.Parent = OpenBtn
+
+-- KHUNG CHÍNH (MAIN FRAME)
+local MainFrame = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local UIStroke = Instance.new("UIStroke")
+local Title = Instance.new("TextLabel")
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+MainFrame.Position = UDim2.new(0.5, -125, 0.4, 0)
+MainFrame.Size = UDim2.new(0, 250, 0, 300) -- Tăng kích thước để chứa Tabs
+MainFrame.BorderSizePixel = 0
+MainFrame.ClipsDescendants = true
+MainFrame.Visible = false 
+
+UICorner.CornerRadius = UDim.new(0, 10); UICorner.Parent = MainFrame
+UIStroke.Color = Color3.fromRGB(0, 255, 150); UIStroke.Thickness = 2; UIStroke.Parent = MainFrame
+
+Title.Name = "Title"; Title.Parent = MainFrame; Title.BackgroundTransparency = 1
+Title.Position = UDim2.new(0, 0, 0, 5); Title.Size = UDim2.new(1, 0, 0, 30)
+Title.Font = Enum.Font.Code; Title.Text = "THÁI HÒA ĐẸP TRAI HUB"; 
+Title.TextColor3 = Color3.fromRGB(0, 255, 150)
+Title.TextSize = 16
+
+-- TẠO TABS
+local TabContainer = Instance.new("Frame")
+TabContainer.Name = "TabContainer"
+TabContainer.Parent = MainFrame
+TabContainer.BackgroundTransparency = 1
+TabContainer.Position = UDim2.new(0, 0, 0, 40)
+TabContainer.Size = UDim2.new(1, 0, 0, 30)
+
+local MainTabBtn = Instance.new("TextButton")
+MainTabBtn.Name = "MainTabBtn"
+MainTabBtn.Parent = TabContainer
+MainTabBtn.Size = UDim2.new(0.5, 0, 1, 0)
+MainTabBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+MainTabBtn.TextColor3 = Color3.fromRGB(0, 255, 150)
+MainTabBtn.Text = "Main"
+MainTabBtn.Font = Enum.Font.SourceSansBold; MainTabBtn.TextSize = 16
+MainTabBtn.BorderSizePixel = 0
+
+local SettingTabBtn = Instance.new("TextButton")
+SettingTabBtn.Name = "SettingTabBtn"
+SettingTabBtn.Parent = TabContainer
+SettingTabBtn.Size = UDim2.new(0.5, 0, 1, 0)
+SettingTabBtn.Position = UDim2.new(0.5, 0, 0, 0)
+SettingTabBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+SettingTabBtn.TextColor3 = Color3.fromRGB(150, 150, 150)
+SettingTabBtn.Text = "Settings"
+SettingTabBtn.Font = Enum.Font.SourceSansBold; SettingTabBtn.TextSize = 16
+SettingTabBtn.BorderSizePixel = 0
+
+-- TẠO CÁC TRANG (PAGES)
+local MainPage = Instance.new("Frame")
+MainPage.Name = "MainPage"
+MainPage.Parent = MainFrame
+MainPage.BackgroundTransparency = 1
+MainPage.Position = UDim2.new(0, 0, 0, 75)
+MainPage.Size = UDim2.new(1, 0, 1, -75)
+MainPage.Visible = true
+
+local SettingPage = Instance.new("Frame")
+SettingPage.Name = "SettingPage"
+SettingPage.Parent = MainFrame
+SettingPage.BackgroundTransparency = 1
+SettingPage.Position = UDim2.new(0, 0, 0, 75)
+SettingPage.Size = UDim2.new(1, 0, 1, -75)
+SettingPage.Visible = false
+
+-- Logic chuyển Tab
+MainTabBtn.MouseButton1Click:Connect(function()
+    MainPage.Visible = true; SettingPage.Visible = false
+    MainTabBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    MainTabBtn.TextColor3 = Color3.fromRGB(0, 255, 150)
+    SettingTabBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    SettingTabBtn.TextColor3 = Color3.fromRGB(150, 150, 150)
+end)
+
+SettingTabBtn.MouseButton1Click:Connect(function()
+    MainPage.Visible = false; SettingPage.Visible = true
+    SettingTabBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    SettingTabBtn.TextColor3 = Color3.fromRGB(0, 255, 150)
+    MainTabBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    MainTabBtn.TextColor3 = Color3.fromRGB(150, 150, 150)
+end)
+
+-- Hàm tạo Nút bấm
+local function CreateButton(name, parent, pos, color)
+    local btn = Instance.new("TextButton")
+    local btnCorner = Instance.new("UICorner")
+    
+    btn.Name = name
+    btn.Parent = parent
+    btn.Size = UDim2.new(1, -30, 0, 40)
+    btn.Position = pos
+    btn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    btn.Font = Enum.Font.SourceSansSemibold
+    btn.Text = name
+    btn.TextColor3 = color
+    btn.TextSize = 15
+    btn.AutoButtonColor = false
+    
+    btnCorner.CornerRadius = UDim.new(0, 6); btnCorner.Parent = btn
+    
+    btn.MouseEnter:Connect(function()
+        TweenService:Create(btn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(55, 55, 55)}):Play()
+    end)
+    btn.MouseLeave:Connect(function()
+        TweenService:Create(btn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(35, 35, 35)}):Play()
+    end)
+    
+    return btn
+end
+
+-- ==========================================
+-- 2. ĐIỀN NỘI DUNG VÀO TABS
+-- ==========================================
+
+-- CÁC NÚT MAIN PAGE
+local AutoKickBtn = CreateButton("Auto Farm: TẮT", MainPage, UDim2.new(0, 15, 0, 5), Color3.fromRGB(255, 100, 100))
+local AutoTrainBtn = CreateButton("Auto Train: TẮT", MainPage, UDim2.new(0, 15, 0, 55), Color3.fromRGB(255, 100, 100))
+local AutoMoneyBtn = CreateButton("Auto Lụm Tiền: TẮT", MainPage, UDim2.new(0, 15, 0, 105), Color3.fromRGB(255, 100, 100))
+
+-- CÁC NÚT SETTING PAGE
+-- Tùy chỉnh Speed
+local SpeedFrame = Instance.new("Frame")
+SpeedFrame.Parent = SettingPage
+SpeedFrame.BackgroundTransparency = 1
+SpeedFrame.Size = UDim2.new(1, -30, 0, 40)
+SpeedFrame.Position = UDim2.new(0, 15, 0, 5)
+
+local SpeedLabel = Instance.new("TextLabel")
+SpeedLabel.Parent = SpeedFrame
+SpeedLabel.BackgroundTransparency = 1
+SpeedLabel.Size = UDim2.new(0.5, 0, 1, 0)
+SpeedLabel.Font = Enum.Font.SourceSansSemibold
+SpeedLabel.Text = "Tốc độ bay (Speed):"
+SpeedLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+SpeedLabel.TextSize = 16
+SpeedLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local SpeedInput = Instance.new("TextBox")
+SpeedInput.Parent = SpeedFrame
+SpeedInput.Size = UDim2.new(0.5, 0, 0.8, 0)
+SpeedInput.Position = UDim2.new(0.5, 0, 0.1, 0)
+SpeedInput.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+SpeedInput.TextColor3 = Color3.fromRGB(0, 255, 150)
+SpeedInput.Font = Enum.Font.SourceSansBold
+SpeedInput.TextSize = 16
+SpeedInput.Text = "116"
+Instance.new("UICorner", SpeedInput).CornerRadius = UDim.new(0, 5)
+
+local ScriptBtn = CreateButton("Load Godmode", SettingPage, UDim2.new(0, 15, 0, 55), Color3.fromRGB(255, 200, 100))
+local AntiLagBtn = CreateButton("Giảm Lag (Boost FPS)", SettingPage, UDim2.new(0, 15, 0, 105), Color3.fromRGB(100, 255, 100))
+
+-- ==========================================
+-- 3. LOGIC KÉO THẢ & BẬT/TẮT UI
+-- ==========================================
+local function ToggleUI()
+    if MainFrame.Visible then
+        MainFrame:TweenSize(UDim2.new(0, 0, 0, 0), "Out", "Quad", 0.2, true)
+        task.wait(0.2)
+        MainFrame.Visible = false
+    else
+        MainFrame.Visible = true
+        MainFrame.Size = UDim2.new(0, 0, 0, 0)
+        MainFrame:TweenSize(UDim2.new(0, 250, 0, 300), "Out", "Back", 0.3, true) 
+    end
+end
+
+OpenBtn.MouseButton1Click:Connect(ToggleUI)
+
+UserInputService.InputBegan:Connect(function(input, processed)
+    if not processed and input.KeyCode == Enum.KeyCode.RightControl then
+        ToggleUI()
+    end
+end)
+
+local dragging, dragInput, dragStart, startPos
+MainFrame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true; dragStart = input.Position; startPos = MainFrame.Position
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then dragging = false end
+        end)
+    end
+end)
+MainFrame.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then dragInput = input end
+end)
+UserInputService.InputChanged:Connect(function(input)
+    if input == dragInput and dragging then
+        local delta = input.Position - dragStart
+        MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end)
+
+-- ==========================================
+-- 4. LOGIC HACK (FARM, TRAIN, LỤM TIỀN, SPEED...)
+-- ==========================================
+local Controls = require(PlayerScripts:WaitForChild("PlayerModule")):GetControls()
+local function LockControls(state)
+    if state == true then Controls:Disable() else Controls:Enable() end
+end
+
+local function findActualSafeZone()
+    for _, obj in ipairs(workspace:GetDescendants()) do
+        if obj:IsA("BasePart") and (string.find(string.upper(obj.Name), "SAFE") or string.find(string.upper(obj.Name), "ZONE")) then
+            return obj.Position + Vector3.new(0, 3, 0)
+        end
+    end
+    return lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") and lp.Character.HumanoidRootPart.Position
+end
+
+local _G_AutoKick = false
+local FINAL_SPEED = 116
+local targetSafeZonePos = nil
+
+-- Cập nhật Speed khi người dùng nhập số
+SpeedInput.FocusLost:Connect(function()
+    local newSpeed = tonumber(SpeedInput.Text)
+    if newSpeed then
+        FINAL_SPEED = newSpeed
+        print("Đã cập nhật tốc độ bay: " .. FINAL_SPEED)
+    else
+        SpeedInput.Text = tostring(FINAL_SPEED) -- Trả về cũ nếu nhập sai chữ
+    end
+end)
+
+local function smoothMoveFinal(targetPos)
+    local char = lp.Character
+    local hrp = char and char:FindFirstChild("HumanoidRootPart")
+    if not hrp then return end
+    LockControls(true) 
+    while _G_AutoKick and (targetPos - hrp.Position).Magnitude > 5 do
+        local direction = (targetPos - hrp.Position).Unit
+        hrp.CFrame = hrp.CFrame + direction * (FINAL_SPEED / 60)
+        RunService.Heartbeat:Wait()
+    end
+    LockControls(false)
+end
+
+-- AUTO FARM LOGIC
+AutoKickBtn.MouseButton1Click:Connect(function()
+    _G_AutoKick = not _G_AutoKick
+    if _G_AutoKick then
+        AutoKickBtn.Text = "Auto Farm: BẬT"
+        AutoKickBtn.TextColor3 = Color3.fromRGB(0, 255, 150)
+        targetSafeZonePos = findActualSafeZone()
+        local hrp = lp.Character and lp.Character:FindFirstChild("HumanoidRootPart")
+        if hrp and targetSafeZonePos then hrp.CFrame = CFrame.new(targetSafeZonePos) end
+
+        task.spawn(function()
+            while _G_AutoKick do
+                pcall(function()
+                    local E = ReplicatedStorage.Shared.Packages.Network:FindFirstChild("rev_KickEvent")
+                    if E then E:FireServer(1) end
+                    local item = nil
+                    for _, o in ipairs(workspace:GetDescendants()) do
+                        if o:IsA("BasePart") and (string.find(string.lower(o.Name), "brainrot") or string.find(string.lower(o.Name), "drop")) then
+                            item = o; break end end
+                    if item then smoothMoveFinal(item.Position); task.wait(0.05) end
+                    smoothMoveFinal(targetSafeZonePos)
+                end)
+                task.wait(0.1)
+            end
+        end)
+    else
+        AutoKickBtn.Text = "Auto Farm: TẮT"
+        AutoKickBtn.TextColor3 = Color3.fromRGB(255, 100, 100)
+        LockControls(false)
+    end
+end)
+
+-- AUTO TRAIN LOGIC
+local _G_AutoTrain = false
+local function findBestTrainingTool()
+    local backpack = lp:FindFirstChild("Backpack")
+    if not backpack then return nil end
+    local keywords = {"weight", "dumbbell", "barbell", "strength", "kick", "tạ"}
+    for _, tool in ipairs(backpack:GetChildren()) do
+        if tool:IsA("Tool") then
+            local nL = string.lower(tool.Name)
+            for _, k in ipairs(keywords) do if string.find(nL, k) then return tool end end
+        end
+    end
+    return backpack:FindFirstChildOfClass("Tool")
+end
+
+local function obliterateX2Buttons()
+    local function scan(folder)
+        if not folder then return end
+        for _, ui in ipairs(folder:GetDescendants()) do
+            if ui:IsA("GuiButton") and ui.Visible then
+                local data = string.lower(ui.Name)
+                if ui:IsA("TextButton") then data = data .. string.lower(ui.Text) end
+                for _, c in ipairs(ui:GetChildren()) do if c:IsA("TextLabel") then data = data .. string.lower(c.Text) end end
+                
+                if string.find(data, "x2") or string.find(data, "click") then
+                    if firesignal then 
+                        pcall(function() firesignal(ui.Activated) firesignal(ui.MouseButton1Click) end) 
+                    end
+                end
+            end
+        end
+    end
+    scan(lp:FindFirstChild("PlayerGui"))
+end
+
+AutoTrainBtn.MouseButton1Click:Connect(function()
+    _G_AutoTrain = not _G_AutoTrain
+    if _G_AutoTrain then
+        AutoTrainBtn.Text = "Auto Train: BẬT"
+        AutoTrainBtn.TextColor3 = Color3.fromRGB(0, 255, 150)
+        task.spawn(function()
+            local lastX2Scan = 0 -- Khởi tạo biến đếm thời gian
+            while _G_AutoTrain do
+                local char = lp.Character
+                local hum = char and char:FindFirstChildOfClass("Humanoid")
+                if char and hum then
+                    local tool = char:FindFirstChildOfClass("Tool")
+                    if not tool then
+                        local best = findBestTrainingTool()
+                        if best then hum:EquipTool(best) end
+                    end
+                    if char:FindFirstChildOfClass("Tool") then char:FindFirstChildOfClass("Tool"):Activate() end
+                    
+                    -- CHỈ QUÉT NÚT X2 MỖI 1 GIÂY 1 LẦN (GIẢM LAG)
+                    if os.clock() - lastX2Scan >= 1 then
+                        obliterateX2Buttons()
+                        lastX2Scan = os.clock()
+                    end
+                    
+                    for _, r in ipairs(ReplicatedStorage:GetDescendants()) do
+                        if r:IsA("RemoteEvent") and (string.find(r.Name:lower(), "train") or string.find(r.Name:lower(), "click")) then
+                            r:FireServer()
+                        end
+                    end
+                end
+                task.wait(0.01)
+            end
+        end)
+    else
+        AutoTrainBtn.Text = "Auto Train: TẮT"
+        AutoTrainBtn.TextColor3 = Color3.fromRGB(255, 100, 100)
+        if lp.Character and lp.Character:FindFirstChildOfClass("Humanoid") then
+            lp.Character.Humanoid:UnequipTools()
+        end
+    end
+end)
+
+-- AUTO LỤM TIỀN LOGIC (TÍCH HỢP)
+local _G_AutoMoney = false
+
+local function isPartGreen(part)
+    local c = part.Color
+    return (c.G > c.R and c.G > c.B)
+end
+
+AutoMoneyBtn.MouseButton1Click:Connect(function()
+    _G_AutoMoney = not _G_AutoMoney
+    if _G_AutoMoney then
+        AutoMoneyBtn.Text = "Auto Lụm Tiền: BẬT"
+        AutoMoneyBtn.TextColor3 = Color3.fromRGB(0, 255, 150)
+        task.spawn(function()
+            while _G_AutoMoney do
+                pcall(function()
+                    local hrp = lp.Character and lp.Character:FindFirstChild("HumanoidRootPart")
+                    if hrp then
+                        for _, gui in ipairs(workspace:GetDescendants()) do
+                            if (gui:IsA("SurfaceGui") or gui:IsA("BillboardGui")) then
+                                local part = gui.Adornee or gui.Parent
+                                if part and part:IsA("BasePart") and isPartGreen(part) then
+                                    local hasMoney = false
+                                    for _, el in ipairs(gui:GetDescendants()) do
+                                        if (el:IsA("TextLabel") or el:IsA("TextButton")) and (string.find(el.Text, "%$") or string.find(el.Text:lower(), "free")) then
+                                            hasMoney = true 
+                                            break
+                                        end
+                                    end
+                                    if hasMoney then
+                                        hrp.CFrame = CFrame.new(part.Position + Vector3.new(0, 1.2, 0))
+                                        task.wait(0.05)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end)
+                task.wait(5) 
+            end
+        end)
+    else
+        AutoMoneyBtn.Text = "Auto Lụm Tiền: TẮT"
+        AutoMoneyBtn.TextColor3 = Color3.fromRGB(255, 100, 100)
+    end
+end)
+
+-- SCRIPT VÀ ANTI LAG
+ScriptBtn.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/mascaracathub/Test-Script/refs/heads/main/godmodev1.lua.txt"))()
+end)
+
+AntiLagBtn.MouseButton1Click:Connect(function()
+    AntiLagBtn.Text = "Đang giảm lag..."
+    task.wait(0.1)
+    
+    Lighting.GlobalShadows = false
+    Lighting.FogEnd = 9e9
+    Lighting.ShadowSoftness = 0
+    if Lighting:FindFirstChildOfClass("Atmosphere") then
+        Lighting:FindFirstChildOfClass("Atmosphere"):Destroy()
+    end
+    
+    local Terrain = workspace:FindFirstChildOfClass("Terrain")
+    if Terrain then
+        Terrain.WaterWaveSize = 0; Terrain.WaterWaveSpeed = 0
+        Terrain.WaterReflectance = 0; Terrain.WaterTransparency = 0
+    end
+    
+    for _, obj in pairs(workspace:GetDescendants()) do
+        if obj:IsA("BasePart") and not obj:IsA("MeshPart") then
+            obj.Material = Enum.Material.Plastic; obj.Reflectance = 0
+        elseif obj:IsA("Decal") or obj:IsA("Texture") then
+            obj.Transparency = 1
+        elseif obj:IsA("ParticleEmitter") or obj:IsA("Trail") then
+            obj.Lifetime = NumberRange.new(0)
+        end
+    end
+    
+    AntiLagBtn.Text = "Đã Giảm Lag ✓"
+    AntiLagBtn.TextColor3 = Color3.fromRGB(0, 255, 150)
+end)
+
+-- ==========================================
+-- 5. ANTI AFK 
+-- ==========================================
+lp.Idled:Connect(function()
+    VirtualUser:CaptureController()
+    VirtualUser:ClickButton2(Vector2.new())
+end)
+
+print("🚀 Thái Hòa Đẹp Trai Hub V2 Loaded! (Tabs + Auto Tiền + Speed Setting + Fixed Lag)")
+
  
